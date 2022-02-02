@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -38,14 +39,52 @@ const TD = styled.td`
   text-align: left;
   padding: 10px;
   border-right: 1px solid white;
+`;
+const Input = styled.input`
+  outline: none;
+  width: 200px;
+  height: 25px;
+  padding: 9px;
+  margin: 3px 3px 3px 3px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+`;
+
+const Button = styled.button`
+  background-color: darkgray;
+  margin-right: 5px;
+  color: white;
+  border: none;
   cursor: pointer;
+  font-weight: 250;
 `;
 
 export default function EntryList(props) {
   const entries = useSelector((state) => state.data.entries);
-  
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filteredEntries = entries.filter((item) => {
+    if (searchTerm === "") {
+      return item;
+    } else if (
+      item.by.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.date.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+      return item;
+  });
+
   return (
     <>
+      {entries.length > 0 && (
+        <Input
+          type="text"
+          name="searchTerm"
+          placeholder="Search by Date/Customer"
+          onChange={(e) => setSearchTerm(e.target.value)}
+        ></Input>
+      )}
+
       <Container>
         <TABLE>
           <CAPTION>{props.month} Report</CAPTION>
@@ -62,19 +101,29 @@ export default function EntryList(props) {
                   <TH>Cost</TH>
                   <TH>Reserve</TH>
                   <TH>Customer</TH>
+                  <TH>Actions</TH>
                 </TR>
               </TBODY>
-              {entries.length > 0 &&
-                entries.map((item) => (
-                  <TBODY key={item._id}>
-                    <TR>
-                      <TD>{item.date}</TD>
+              <TBODY>
+                {filteredEntries.length > 0 &&
+                  filteredEntries.map((item, i) => (
+                    <TR key={item._id}>
+                      <TD>{i + 1 + ". " + item.date}</TD>
                       <TD>{item.cost.toFixed(2)}</TD>
                       <TD>{item.reserve.toFixed(2)}</TD>
                       <TD>{item.by}</TD>
+                      <TD>
+                        <Button><Link
+                          to={{ pathname: `/entries/${item._id}` }}
+                          style={{ textDecoration: "none", color: "white" }}
+                        >
+                          Print
+                        </Link></Button>
+                        <Button style={{ color: "red" }}>Remove</Button>
+                      </TD>
                     </TR>
-                  </TBODY>
-                ))}
+                  ))}
+              </TBODY>
             </>
           )}
         </TABLE>

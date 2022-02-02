@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../redux/apiCalls";
+import { deleteEntryByCustomer, updateUser } from "../redux/apiCalls";
 
 const Input = styled.input`
   margin-right: 5px;
@@ -45,7 +45,8 @@ const RemoveCustomer = ({ c }) => {
       admin_key: key,
       customers: customers,
     };
-    updateUser(user._id, updatedUser, dispatch).then((res) => {
+    c.reserve === 0 && updateUser(user._id, updatedUser, dispatch).then((res) => {
+      res.status===200 && deleteEntryByCustomer(c.name,key);
       setError(res.request);
     });
   };

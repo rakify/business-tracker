@@ -23,7 +23,7 @@ const ErrorDisplay = ({ error }) => {
             borderRadius: "3px 3px 3px 3px",
           }}
         >
-          🌟 User Updated Successfully.
+          🌟 Update Successfull.
         </Error>
       )}
       {error && error.status !== 200 && (

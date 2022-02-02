@@ -41,6 +41,7 @@ const EditCustomer = ({ c }) => {
     pn: c.pn || "",
     address: c.address || "",
     note: c.note || "",
+    reserve: c.reserve || 0,
   });
 
   const handleChange = (e) => {
@@ -58,6 +59,7 @@ const EditCustomer = ({ c }) => {
       pn: customer.pn,
       address: customer.address,
       note: customer.note,
+      reserve: customer.reserve
     };
     const pos = customers.findIndex((item) => item.name === c.name);
     customers[pos] = newCustomer;

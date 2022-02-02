@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Topbar from "./Topbar";
 import { mobile } from "../responsive";
@@ -102,9 +102,13 @@ const Customers = () => {
                       <Button onClick={(e) => handleEdit(e, customer)}>
                         Edit
                       </Button>
-                      <Button onClick={(e) => handleRemove(e, customer)}>
-                        Remove
-                      </Button>
+                      {customer.reserve === 0 && (
+                        <Button
+                          onClick={(e) => handleRemove(e, customer)}
+                        >
+                          Remove
+                        </Button>
+                      )}
                     </TD>
                   </TR>
                 )}

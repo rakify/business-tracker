@@ -116,6 +116,17 @@ export const getEntry = async (username, month, year, dispatch) => {
   }
 };
 
+export const deleteEntryByCustomer = async (customer, key) => {
+  try {
+    const res = await axios.delete(`/entries/${customer}`, {
+      data: { admin_key: key },
+    });
+    return res.data;
+  } catch (err) {
+    return err.response.data;
+  }
+};
+
 export const deleteEntry = async (id, key, dispatch) => {
   dispatch(deleteEntriesStart());
   try {

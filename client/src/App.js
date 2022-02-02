@@ -10,25 +10,21 @@ import Home from "./pages/Home";
 import Admin from "./pages/Admin";
 import Register from "./pages/Register";
 import ForgotPass from "./components/ForgotPass";
-import Customers from './components/Customers';
-import Products from './components/Products';
+import Customers from "./components/Customers";
+import Products from "./components/Products";
+import Settings from './components/Settings';
+import EntryDetails from './components/EntryDetails';
+
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route
-          exact
-          path="/pages/customers"
-          element={<Customers />}
-        />
-        <Route
-          exact
-          path="/pages/products"
-          element={<Products />}
-        />
+      <Route exact path="/entries/:entryId" element={user ? <EntryDetails /> : <Login />} />
+        <Route exact path="/pages/settings" element={user ? <Settings /> : <Login />} />
+        <Route exact path="/pages/customers" element={user ? <Customers />:<Login />} />
+        <Route exact path="/pages/products" element={user ? <Products />: <Login />} />
         <Route
           exact
           path="/login"

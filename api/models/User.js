@@ -22,7 +22,12 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     shopName: String,
+    shopAddress: String,
     shopBanner: String,
+    shopDetails: String,
+    shopOfficePn: String,
+    shopOtherPn: String,
+    shopSignature: String,
     customers: [{
       name: String,
       pn: String,

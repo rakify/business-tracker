@@ -53,7 +53,7 @@ const AddProduct = () => {
     let products = user.products;
     const product = [
       {
-        name: inputs.name,
+        name: inputs.name.toLowerCase().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()),
         price: inputs.price,
         unit: inputs.unit,
       },

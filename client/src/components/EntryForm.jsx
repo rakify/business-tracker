@@ -100,15 +100,6 @@ const BottomRight = styled.div`
   flex: 1;
 `;
 
-const Error = styled.div`
-  border: 1px solid;
-  margin: 10px 0px;
-  padding: 15px 10px 15px 50px;
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  cursor: pointer;
-`;
-
 const ForgotClick = styled.button`
   outline: none;
   border: none;
@@ -118,20 +109,17 @@ const ForgotClick = styled.button`
 const EntryForm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-  const d = new Date();
-  let date = d.getDate();
-
+  const date = new Date().toLocaleString('en-us', {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'  })
   const [inputs, setInputs] = useState({
     user: user.username,
+    date: date,
     cost: 0, // todays total cost
     previousReserve: 0, // previous date final reserved
     reserve: 0, // todays reserve
     finalReserve: 0, // (previousReserve-cost)+reserve
     by: "", //buyer
-    date: date,
     admin_key: "",
   });
-
   const [pos, setPos] = useState();
   const [prompt, setPrompt] = useState(false);
   const [error, setError] = useState(); // after submitting show result
@@ -207,7 +195,7 @@ const EntryForm = () => {
     e.preventDefault();
     const products = user.products;
     setLoading(true);
-    //update customer reserve
+    //setup for updating customer reserve
     const customers = [...user.customers];
     const customer = customers[pos];
     const newCustomer = {
@@ -223,6 +211,7 @@ const EntryForm = () => {
       admin_key: inputs?.admin_key,
       customers: customers,
     };
+    //add new entry
     addEntry({ ...inputs, products, quantity, subtotal }, dispatch).then(
       (res) => {
         res.status === 200 && updateUser(user._id, updatedUser, dispatch);

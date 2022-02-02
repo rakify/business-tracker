@@ -54,7 +54,7 @@ const AddCustomer = () => {
     let customers = user.customers;
     const customer = [
       {
-        name: inputs.name,
+        name: inputs.name.toLowerCase().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()),
         pn: inputs.pn,
         address: inputs.address,
         note: inputs.note,

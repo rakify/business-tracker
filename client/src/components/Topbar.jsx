@@ -12,7 +12,6 @@ const Top = styled.div`
   font-size: 30px;
   padding-bottom: 10px;
   background-color: #71cad0;
-  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
@@ -20,7 +19,6 @@ const Top = styled.div`
   font-family: "CoreCircus", sans-serif;
   text-transform: uppercase;
   line-height: 1;
-  margin: 0;
   color: #61c0c8;
   text-shadow: 1px 0px 0px #67c2c5, 0px 1px 0px #67c2c5, 2px 1px 0px #67c2c5,
     1px 2px 0px #67c2c5, 3px 2px 0px #67c2c5, 2px 3px 0px #67c2c5,
@@ -28,7 +26,7 @@ const Top = styled.div`
     4px 5px 0px #67c2c5, 6px 5px 0px #67c2c5, 5px 6px 0px #67c2c5,
     7px 6px 0px #67c2c5, 6px 7px 0px #67c2c5;
 
-  ${mobile({ padding: 0 })}
+  ${mobile({ fontSize: "20px" })}
 
   &:before,&:after {
     content: attr(data-heading);
@@ -64,10 +62,19 @@ const Menu = styled.div`
 `;
 const MenuItem = styled.div`
   margin-right: 5px;
+  border-radius: 10%;
+  background: gray;
+  color: white;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:last-child {
     position: absolute;
     right: 0;
+    border-radius: 0%;
+    background: white;
+    color: black;
   }
 `;
 
@@ -81,13 +88,21 @@ const Topbar = () => {
     <>
       <Top>
         <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-          Halkhata - হালখাতা
+          {user?.shopName?user.shopName:"Business Tracker"}
         </Link>
       </Top>
+      
       {user && (
         <Menu>
+          
           {pos.pathname === "/" ? (
-            <MenuItem style={{ marginTop: "5px", fontWeight: "bolder" }}>
+            <MenuItem
+              style={{
+                marginTop: "5px",
+                fontWeight: "bolder",
+                fontSize: "20px",
+              }}
+            >
               Home
             </MenuItem>
           ) : (
@@ -106,7 +121,7 @@ const Topbar = () => {
           )}
           {pos.pathname === "/pages/customers" ? (
             <MenuItem style={{ marginTop: "5px", fontWeight: "bolder" }}>
-              Customers ({user.customers.length})
+              Customers
             </MenuItem>
           ) : (
             <MenuItem>
@@ -124,7 +139,7 @@ const Topbar = () => {
           )}
           {pos.pathname === "/pages/products" ? (
             <MenuItem style={{ marginTop: "5px", fontWeight: "bolder" }}>
-              Products ({user.products.length})
+              Products
             </MenuItem>
           ) : (
             <MenuItem>
@@ -140,21 +155,21 @@ const Topbar = () => {
               </Link>
             </MenuItem>
           )}
-          {pos.pathname === "/pages/about" ? (
+          {pos.pathname === "/pages/settings" ? (
             <MenuItem style={{ marginTop: "5px", fontWeight: "bolder" }}>
-              About
+              Settings
             </MenuItem>
           ) : (
             <MenuItem>
               <Link
-                to="/pages/about"
+                to="/pages/settings"
                 style={{
                   textDecoration: "none",
                   color: "black",
                   cursor: "pointer",
                 }}
               >
-                About
+                Settings
               </Link>
             </MenuItem>
           )}
@@ -174,6 +189,7 @@ const Topbar = () => {
         </Menu>
       )}
 
+      <br />
       <br />
     </>
   );
