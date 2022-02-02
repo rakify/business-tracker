@@ -30,10 +30,13 @@ const UserSchema = new mongoose.Schema(
     shopSignature: String,
     customers: [{
       name: String,
+      _name: String,
       pn: String,
       address: String,
       note: String,
       reserve: Number,
+      totalCost: Number,
+      totalReserve: Number
     }],
     products: [{
       name: String,

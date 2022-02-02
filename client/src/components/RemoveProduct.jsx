@@ -31,7 +31,6 @@ const TD = styled.td`
 const RemoveProduct = ({ c }) => {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [error, setError] = useState(false);
   const [key, setKey] = useState();
   const [removeId, setRemoveId] = useState(c._id);
 
@@ -45,9 +44,7 @@ const RemoveProduct = ({ c }) => {
       admin_key: key,
       products: products,
     };
-    updateUser(user._id, updatedUser, dispatch).then((res) => {
-      setError(res.request);
-    });
+    key.length===4 && updateUser(user._id, updatedUser, dispatch);
   };
 
   return (

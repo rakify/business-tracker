@@ -200,10 +200,13 @@ const EntryForm = () => {
     const customer = customers[pos];
     const newCustomer = {
       name: customer?.name,
+      _name: customer._name,
       pn: customer?.pn,
       address: customer?.address,
       note: customer?.note,
       reserve: inputs?.finalReserve,
+      totalCost: inputs.cost+customer.totalCost,
+      totalReserve: inputs.reserve+customer.totalReserve,
     };
     customers[pos] = newCustomer;
     const updatedUser = {

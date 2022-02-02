@@ -6,23 +6,22 @@ import { useState } from "react";
 const Container = styled.div`
   display: flex;
   overflow-x: auto;
+  background: #63aa9c;
+`;
+const TOP = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 const TABLE = styled.table`
-  border: 1px solid green;
   width: 100%;
 `;
-const CAPTION = styled.caption`
+const TITLE = styled.div`
   font-weight: bolder;
   display: inline;
   font-size: 20px;
 `;
-
-const TBODY = styled.tbody`
-  &:nth-child(even) {
-    background-color: #d7e5f1;
-  }
-  background-color: #e5ecf0;
-`;
+const THEAD = styled.thead``;
+const TBODY = styled.tbody``;
 const TR = styled.tr`
   display: flex;
 `;
@@ -31,10 +30,17 @@ const TH = styled.th`
   text-align: left;
   border-bottom: 1px solid black;
   padding: 10px;
-  background-color: #8aa18a;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
+  background-color: #b2cecf;
   border-right: 1px solid white;
 `;
 const TD = styled.td`
+  &:last-child {
+    background-color: #d7e5f1;
+  }
+  background-color: #e5ecf0;
   flex: 1;
   text-align: left;
   padding: 10px;
@@ -64,69 +70,73 @@ export default function EntryList(props) {
   const entries = useSelector((state) => state.data.entries);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredEntries = entries.filter((item) => {
-    if (searchTerm === "") {
-      return item;
-    } else if (
-      item.by.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.date.toLowerCase().includes(searchTerm.toLowerCase())
-    )
-      return item;
-  });
+  const filteredEntries = entries.filter((item) =>
+    searchTerm === ""
+      ? item
+      : item.by
+          .toLowerCase()
+          .includes(
+            searchTerm.toLowerCase() ||
+              item.date.toLowerCase().includes(searchTerm.toLowerCase())
+          )
+      ? item
+      : ""
+  );
 
   return (
     <>
-      {entries.length > 0 && (
-        <Input
-          type="text"
-          name="searchTerm"
-          placeholder="Search by Date/Customer"
-          onChange={(e) => setSearchTerm(e.target.value)}
-        ></Input>
-      )}
-
+      <TOP>
+        <TITLE>{props.month} Report</TITLE>
+        {filteredEntries.length > 0 && (
+          <Input
+            type="text"
+            name="searchTerm"
+            placeholder="Filter by Date/Customer"
+            onChange={(e) => setSearchTerm(e.target.value)}
+          ></Input>
+        )}
+      </TOP>
       <Container>
-        <TABLE>
-          <CAPTION>{props.month} Report</CAPTION>
-          {entries.length === 0 ? (
-            <>
-              <h3>As empty as a politician's promises. ツ</h3>
-              <h4>Lets start updating data by clicking on your username.</h4>
-            </>
-          ) : (
-            <>
-              <TBODY>
-                <TR>
-                  <TH>Date</TH>
-                  <TH>Cost</TH>
-                  <TH>Reserve</TH>
-                  <TH>Customer</TH>
-                  <TH>Actions</TH>
-                </TR>
-              </TBODY>
-              <TBODY>
-                {filteredEntries.length > 0 &&
-                  filteredEntries.map((item, i) => (
-                    <TR key={item._id}>
-                      <TD>{i + 1 + ". " + item.date}</TD>
-                      <TD>{item.cost.toFixed(2)}</TD>
-                      <TD>{item.reserve.toFixed(2)}</TD>
-                      <TD>{item.by}</TD>
-                      <TD>
-                        <Button><Link
+        {filteredEntries.length === 0 ? (
+          <>
+            <h3>As empty as a politician's promises. ツ</h3>
+            <h4>Lets start updating data by clicking on your username.</h4>
+          </>
+        ) : (
+          <TABLE>
+            <THEAD>
+              <TR>
+                <TH>Date</TH>
+                <TH>Cost(৳)</TH>
+                <TH>Reserve(৳)</TH>
+                <TH>Customer</TH>
+                <TH>Actions</TH>
+              </TR>
+            </THEAD>
+            <TBODY>
+              {filteredEntries.length > 0 &&
+                filteredEntries.map((item, i) => (
+                  <TR key={item._id}>
+                    <TD>{filteredEntries.length - i + ". " + item.date}</TD>
+                    <TD>{item.cost.toFixed(2)}</TD>
+                    <TD>{item.reserve.toFixed(2)}</TD>
+                    <TD>{item.by}</TD>
+                    <TD>
+                      <Button>
+                        <Link
                           to={{ pathname: `/entries/${item._id}` }}
                           style={{ textDecoration: "none", color: "white" }}
                         >
                           Print
-                        </Link></Button>
-                        <Button style={{ color: "red" }}>Remove</Button>
-                      </TD>
-                    </TR>
-                  ))}
-              </TBODY>
-            </>
-          )}
-        </TABLE>
+                        </Link>
+                      </Button>
+                      <Button style={{ color: "red" }}>Remove</Button>
+                    </TD>
+                  </TR>
+                ))}
+            </TBODY>
+          </TABLE>
+        )}
       </Container>
       {!props.admin && (
         <Link

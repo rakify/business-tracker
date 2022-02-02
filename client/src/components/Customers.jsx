@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Topbar from "./Topbar";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Topbar from "./Topbar";
 import AddCustomer from "./AddCustomer";
 import EditCustomer from "./EditCustomer";
 import RemoveCustomer from "./RemoveCustomer";
 
 const Form = styled.form`
   display: flex;
+  overflow-x: auto;
   gap: 15px;
   ${mobile({ flexDirection: "column" })}
+`;
+const TITLE = styled.div`
+  font-weight: bolder;
+  display: inline;
+  font-size: 20px;
 `;
 
 const TABLE = styled.table`
   width: 100%;
 `;
 
-const TBODY = styled.tbody`
-  &:nth-child(even) {
-    background-color: #d7e5f1;
-  }
-  background-color: #e5ecf0;
-`;
+const TBODY = styled.tbody``;
 const TR = styled.tr`
   display: flex;
 `;
@@ -32,6 +34,9 @@ const TH = styled.th`
   text-align: left;
   border-bottom: 1px solid black;
   padding: 10px;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
   background-color: #8aa18a;
   border-right: 1px solid white;
 `;
@@ -39,7 +44,10 @@ const TD = styled.td`
   flex: 1;
   text-align: left;
   padding: 10px;
-  border-right: 1px solid white;
+  border: 1px solid black;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
 `;
 const Button = styled.button`
   background-color: #132513;
@@ -74,6 +82,7 @@ const Customers = () => {
   return (
     <>
       <Topbar />
+      <TITLE>Customers</TITLE>
       <Form>
         <TABLE>
           <THEAD>
@@ -99,13 +108,23 @@ const Customers = () => {
                     <TD>{customer.address}</TD>
                     <TD>{customer.note}</TD>
                     <TD>
+                      <Button>
+                        <Link
+                          to={{ pathname: `/customer/${customer._name}` }}
+                          style={{
+                            textDecoration: "none",
+                            color: "white",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Details
+                        </Link>
+                      </Button>
                       <Button onClick={(e) => handleEdit(e, customer)}>
                         Edit
                       </Button>
                       {customer.reserve === 0 && (
-                        <Button
-                          onClick={(e) => handleRemove(e, customer)}
-                        >
+                        <Button onClick={(e) => handleRemove(e, customer)}>
                           Remove
                         </Button>
                       )}

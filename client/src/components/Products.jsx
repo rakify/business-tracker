@@ -12,16 +12,16 @@ const Form = styled.form`
   gap: 15px;
   ${mobile({ flexDirection: "column" })}
 `;
-
+const TITLE = styled.div`
+  font-weight: bolder;
+  display: inline;
+  font-size: 20px;
+`;
 const TABLE = styled.table`
   width: 100%;
 `;
 
 const TBODY = styled.tbody`
-  &:nth-child(even) {
-    background-color: #d7e5f1;
-  }
-  background-color: #e5ecf0;
 `;
 const TR = styled.tr`
   display: flex;
@@ -32,14 +32,20 @@ const TH = styled.th`
   text-align: left;
   border-bottom: 1px solid black;
   padding: 10px;
-  background-color: #8aa18a;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
+    background-color: #8aa18a;
   border-right: 1px solid white;
 `;
 const TD = styled.td`
   flex: 1;
   text-align: left;
   padding: 10px;
-  border-right: 1px solid white;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
+  border: 1px solid black;
 `;
 const Button = styled.button`
   background-color: #132513;
@@ -74,6 +80,7 @@ const Products = () => {
   return (
     <>
       <Topbar />
+      <TITLE>Products</TITLE>
       <Form>
         <TABLE>
           <THEAD>

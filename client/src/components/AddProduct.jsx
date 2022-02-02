@@ -71,7 +71,7 @@ const AddProduct = () => {
       admin_key: inputs.key,
       products: products,
     };
-    !hasDuplicates &&
+    !hasDuplicates && inputs.key.length===4 &&
       updateUser(user._id, updatedUser, dispatch).then((res) => {
         setError(res.request);
       });

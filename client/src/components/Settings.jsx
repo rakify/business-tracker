@@ -15,8 +15,10 @@ const Sidebar = styled.div`
 const Form = styled.form`
   flex: 9;
 `;
-const Subtitle = styled.h3`
-  text-align: center;
+const TITLE = styled.div`
+  font-weight: bolder;
+  display: inline;
+  font-size: 20px;
 `;
 const Title = styled.div`
   font-weight: bolder;
@@ -67,7 +69,6 @@ export default function Settings() {
   const [error, setError] = useState("");
   const [confirm, setConfirm] = useState("Set Key");
   const [keyResult, setKeyResult] = useState();
-  const [next, setNext] = useState();
   const [showSidebar, setShowSidebar] = useState(false);
   const [nowShowing, setNowShowing] = useState("account");
 
@@ -101,12 +102,6 @@ export default function Settings() {
     });
   };
 
-  const requestKey = (e) => {
-    e.preventDefault();
-    setConfirm(`Please Wait..`);
-    updateKey(user._id).then((res) => setKeyResult(res.request));
-  };
-
   return (
     <>
       <Topbar />
@@ -115,18 +110,35 @@ export default function Settings() {
         {!showSidebar && <Title onClick={() => setShowSidebar(true)}>︾</Title>}
         {showSidebar && (
           <Sidebar>
-            <Title onClick={() => setNowShowing("account")}>Your Account</Title>
-            <Title onClick={() => setNowShowing("business")}>
-              Business Info
-            </Title>
-            <Title>Change Password</Title>
+            {nowShowing === "account" ? (
+              <Title
+                style={{ border: "1px solid green", background: "#ECEAE0" }}
+              >
+                Your Account
+              </Title>
+            ) : (
+              <Title onClick={() => setNowShowing("account")}>
+                Your Account
+              </Title>
+            )}
+            {nowShowing === "business" ? (
+              <Title
+                style={{ border: "1px solid green", background: "#ECEAE0" }}
+              >
+                Business Info
+              </Title>
+            ) : (
+              <Title onClick={() => setNowShowing("business")}>
+                Business Info
+              </Title>
+            )}
             <Title onClick={() => setShowSidebar(false)}>︽</Title>
           </Sidebar>
         )}
         {nowShowing === "account" && (
           <Form onSubmit={handleSubmit}>
-            <Subtitle>Account Settings</Subtitle>
-            <hr style={{ width: "50%" }} />
+            {!showSidebar && <TITLE>Account Settings</TITLE>}
+            <br />
             <Label>Username: </Label>
             <Input
               type="text"
@@ -170,8 +182,8 @@ export default function Settings() {
         )}
         {nowShowing === "business" && (
           <Form onSubmit={handleSubmit}>
-            <Subtitle>Business Informations</Subtitle>
-            <hr style={{ width: "50%" }} />
+            {!showSidebar && <TITLE>Business Info</TITLE>}
+            <br />
             <Label>Business Name: </Label>
             <Input
               type="text"

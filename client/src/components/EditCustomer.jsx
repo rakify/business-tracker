@@ -42,6 +42,8 @@ const EditCustomer = ({ c }) => {
     address: c.address || "",
     note: c.note || "",
     reserve: c.reserve || 0,
+    totalCost: c.totalCost || 0,
+    totalReserve: c.totalReserve || 0,
   });
 
   const handleChange = (e) => {
@@ -55,11 +57,17 @@ const EditCustomer = ({ c }) => {
     e.preventDefault();
     const customers = [...user.customers];
     const newCustomer = {
-      name: customer.name,
+      name: customer.name
+        .replace(/\s+/g, " ") //replace multiple space with single space
+        .toLowerCase()
+        .replace(/(^\w{1})|(\s{1}\w{1})/g, (match) => match.toUpperCase()), //make each word first letter uppercase
+      _name: customer.name.toLowerCase().replace(/\s+/g, "_"), //replace space with _
       pn: customer.pn,
       address: customer.address,
       note: customer.note,
-      reserve: customer.reserve
+      reserve: customer.reserve,
+      totalCost: customer.totalCost,
+      totalReserve: customer.totalReserve,
     };
     const pos = customers.findIndex((item) => item.name === c.name);
     customers[pos] = newCustomer;
@@ -74,7 +82,7 @@ const EditCustomer = ({ c }) => {
       return seen.size === seen.add(currentObject.name).size;
     });
 
-    !hasDuplicates && updateUser(user._id, updatedUser, dispatch);
+    !hasDuplicates && customer.key.length===4 && updateUser(user._id, updatedUser, dispatch);
     hasDuplicates && setError(true);
   };
 

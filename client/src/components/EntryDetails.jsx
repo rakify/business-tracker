@@ -10,6 +10,7 @@ const FifthLine = styled.div`
 const TABLE = styled.table`
   width: 100%;
 `;
+const THEAD = styled.thead``;
 const TBODY = styled.tbody``;
 const TFOOT = styled.tfoot``;
 const TR = styled.tr`
@@ -42,7 +43,6 @@ const EntryDetails = () => {
   const entry = entries[entryIndex];
   const byIndex = user.customers.findIndex((item) => item.name === entry.by);
   const by = user.customers[byIndex];
-  console.log(entry);
   return (
     <>
       <h1 style={{ textAlign: "center" }}>
@@ -77,18 +77,18 @@ const EntryDetails = () => {
       </p>
 
       <TABLE>
-        <TBODY>
+        <THEAD>
           <TR>
             <TH>Name</TH>
-            <TH>Price</TH>
+            <TH>Price(৳)</TH>
             <TH>Quantity</TH>
-            <TH>Subtotal</TH>
+            <TH>Subtotal(৳)</TH>
           </TR>
-        </TBODY>
+        </THEAD>
         <TBODY>
-          {entry.products.map((item) => (
+          {entry.products.map((item,i) => (
             <TR>
-              <TD>{item.name}</TD>
+              <TD>{i+1}. {item.name}</TD>
               <TD>{item.price}</TD>
               <TD>{entry.quantity[`${item.name}`]}</TD>
               <TD>{entry.subtotal[`${item.name}`]}</TD>
@@ -100,7 +100,7 @@ const EntryDetails = () => {
             <TD2></TD2>
             <TD2></TD2>
             <TD>Total:</TD>
-            <TD>{entry.cost}</TD>
+            <TD>{entry.cost}৳</TD>
           </TR>
           <TR>
             <TD2></TD2>
@@ -111,25 +111,21 @@ const EntryDetails = () => {
                 : `Previous Deposit:`}
             </TD>
             <TD>
-              {entry.previousReserve < 0
-                ? Math.abs(entry.previousReserve)
-                : entry.previousReserve}
+              {Math.abs(entry.previousReserve)}৳
             </TD>
           </TR>
           <TR>
             <TD2></TD2>
             <TD2></TD2>
             <TD>Today Deposit:</TD>
-            <TD>{entry.reserve}</TD>
+            <TD>{entry.reserve}৳</TD>
           </TR>
           <TR>
             <TD2></TD2>
             <TD2></TD2>
             <TD> {entry.finalReserve < 0 ? `Due Left:` : `Reserve Left:`}</TD>
             <TD>
-              {entry.finalReserve < 0
-                ? Math.abs(entry.finalReserve)
-                : entry.finalReserve}
+{Math.abs(entry.finalReserve)}৳
             </TD>
           </TR>
         </TFOOT>

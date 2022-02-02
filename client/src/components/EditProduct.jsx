@@ -53,7 +53,9 @@ const EditProduct = ({ c }) => {
     e.preventDefault();
     const products = [...user.products];
     const newProduct = {
-      name: product.name,
+      name: product.name
+        .toLowerCase()
+        .replace(/(^\w{1})|(\s{1}\w{1})/g, (match) => match.toUpperCase()),
       price: product.price,
       unit: product.unit,
     };
@@ -70,7 +72,9 @@ const EditProduct = ({ c }) => {
       return seen.size === seen.add(currentObject.name).size;
     });
 
-    !hasDuplicates && updateUser(user._id, updatedUser, dispatch);
+    !hasDuplicates &&
+      product.key.length === 4 &&
+      updateUser(user._id, updatedUser, dispatch);
     hasDuplicates && setError(true);
   };
 

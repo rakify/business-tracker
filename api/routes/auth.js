@@ -63,7 +63,6 @@ router.post("/login", async (req, res) => {
 
 //UPDATE USER
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
-  console.log(req.body)
   if (req.body.key === true) {
     const randomKey = Math.floor(1000 + Math.random() * 9000);
     try {
@@ -89,8 +88,8 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
       let mailOption = {
         from: "irakibm@gmail.com",
         to: updatedUser.email,
-        subject: `Halkhata - New Key`,
-        text: `Dear ${updatedUser.username},\nIt seems that you requested to reset your admin key.\nHere is the key.\nKey: ${randomKey}\nThank you for using mess meal tracker.\nIf you have any query regarding the site, please reply to this mail.`,
+        subject: `Business Tracker - New Key`,
+        text: `Dear ${updatedUser.username},\nIt seems that you requested to reset your admin key.\nHere is the key.\nKey: ${randomKey}\nThank you for using business tracker.\nIf you have any query regarding the site, please reply to this mail.`,
       };
 
       transporter.sendMail(mailOption, function (err, data) {
@@ -189,7 +188,7 @@ router.post("/forgot-pass", async (req, res) => {
     let mailOption = {
       from: "irakibm@gmail.com",
       to: user.email,
-      subject: `Halkhata - Reset Password`,
+      subject: `Business Tracker - Reset Password`,
       text: `Dear ${user.username},\nDid you just request to reset your password? If you did not, simply ignore this email.\nFollow this link to reset your password. This Link will be invalid after one hour and can only be used one time. \nLink: ${link}\nThank you for using Halkhata.\nIf you have any query regarding the site, please reply to this mail.`,
     };
 

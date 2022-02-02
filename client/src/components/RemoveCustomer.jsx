@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteEntryByCustomer, updateUser } from "../redux/apiCalls";
+import { updateUser } from "../redux/apiCalls";
 
 const Input = styled.input`
   margin-right: 5px;
@@ -31,8 +31,7 @@ const TD = styled.td`
 const RemoveCustomer = ({ c }) => {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [error, setError] = useState(false);
-  const [key, setKey] = useState();
+  const [key, setKey] = useState("");
   const [removeId, setRemoveId] = useState(c._id);
 
   const handleSubmit = async (e) => {
@@ -45,10 +44,7 @@ const RemoveCustomer = ({ c }) => {
       admin_key: key,
       customers: customers,
     };
-    c.reserve === 0 && updateUser(user._id, updatedUser, dispatch).then((res) => {
-      res.status===200 && deleteEntryByCustomer(c.name,key);
-      setError(res.request);
-    });
+    c.reserve === 0 && key.length===4 && updateUser(user._id, updatedUser, dispatch);
   };
 
   return (

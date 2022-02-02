@@ -55,10 +55,13 @@ const AddCustomer = () => {
     const customer = [
       {
         name: inputs.name.toLowerCase().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()),
+        _name: inputs.name.toLowerCase().replace(/\s+/g, '_'),
         pn: inputs.pn,
         address: inputs.address,
         note: inputs.note,
-        reserve: 0 //initial reserve se to 0, it will update each time this person buys something
+        reserve: 0, //initial reserve set to 0, it will update each time this person buys something
+        totalCost: 0, //initial cost 0
+        totalReserve: 0 // initial all reserve 0
       },
     ];
     if (inputs.name.length > 3) customers = [...customers, ...customer];
@@ -74,7 +77,7 @@ const AddCustomer = () => {
       admin_key: inputs.key,
       customers: customers,
     };
-    !hasDuplicates &&
+    !hasDuplicates && inputs.key.length===4 &&
       updateUser(user._id, updatedUser, dispatch).then((res) => {
         setError(res.request);
       });

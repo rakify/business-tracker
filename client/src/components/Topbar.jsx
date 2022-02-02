@@ -63,7 +63,7 @@ const Menu = styled.div`
 const MenuItem = styled.div`
   margin-right: 5px;
   border-radius: 10%;
-  background: gray;
+  background: #63AA9C;
   color: white;
   position: relative;
   display: flex;
@@ -86,15 +86,14 @@ const Topbar = () => {
 
   return (
     <>
-      <Top>
-        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-          {user?.shopName?user.shopName:"Business Tracker"}
-        </Link>
-      </Top>
+        <Top>
+          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+            {user?.shopName ? user.shopName : "Business Tracker"}
+          </Link>
+        </Top>
       
-      {user && (
+      {user?.customers.length > 0 && (
         <Menu>
-          
           {pos.pathname === "/" ? (
             <MenuItem
               style={{
@@ -173,6 +172,23 @@ const Topbar = () => {
               </Link>
             </MenuItem>
           )}
+          <MenuItem>
+            <Link
+              to="/admin"
+              style={{
+                textDecoration: "none",
+                color: "black",
+                cursor: "pointer",
+              }}
+            >
+              {user.username}
+            </Link>
+            <Logout onClick={() => logout(dispatch)}>(Logout)</Logout>
+          </MenuItem>
+        </Menu>
+      )}
+      {user?.customers.length === 0 && (
+        <Menu>
           <MenuItem>
             <Link
               to="/admin"

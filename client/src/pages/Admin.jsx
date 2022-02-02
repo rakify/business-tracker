@@ -2,18 +2,11 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { getEntry, getUser } from "../redux/apiCalls";
 import { useEffect } from "react";
-import { mobile } from "../responsive";
 import Topbar from "../components/Topbar";
 import EntryForm from "../components/EntryForm";
-import EntryList from "../components/EntryList";
-import FinalReport from "../components/FinalReport";
 import UpdateUser from "../components/UpdateUser";
 
 const Container = styled.div``;
-// const Menu = styled.div`
-//   display: flex;
-//   ${mobile({ flexDirection: "column" })}
-// `;
 
 const Admin = () => {
   const dispatch = useDispatch();
@@ -32,8 +25,6 @@ const Admin = () => {
   Month[10] = "November";
   Month[11] = "December";
   const d = new Date();
-  let date = d.getDate();
-  let month = Month[d.getMonth()];
   let monthId = d.getMonth();
   let year = d.getFullYear();
 
