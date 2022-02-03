@@ -21,6 +21,7 @@ const UserSchema = new mongoose.Schema(
       minlength: 4,
       required: true,
     },
+    language: String,
     shopName: String,
     shopAddress: String,
     shopBanner: String,

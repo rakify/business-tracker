@@ -83,7 +83,7 @@ const Products = () => {
               <TH>Name</TH>
               <TH>Price</TH>
               <TH>Unit</TH>
-              <TH>Actions</TH>
+              <TH>Control</TH>
             </TR>
           </THEAD>
           <TBODY>
@@ -103,7 +103,7 @@ const Products = () => {
                         Edit
                       </Button>
                       <Button onClick={(e) => handleRemove(e, product)}>
-                        Remove
+                        Delete
                       </Button>
                     </TD>
                   </TR>

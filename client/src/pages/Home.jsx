@@ -6,7 +6,7 @@ import Topbar from "../components/Topbar";
 import EntryList from "../components/EntryList";
 import UpdateUser from "../components/UpdateUser";
 
-const Admin = () => {
+const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
   const p = useParams();
@@ -40,6 +40,8 @@ const Admin = () => {
     prevYear = year;
   }
 
+  
+
   //fetch api changes
   useEffect(() => {
     getEntry(user.username, monthId, year, dispatch);
@@ -65,4 +67,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default Home;

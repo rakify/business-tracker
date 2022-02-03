@@ -145,9 +145,9 @@ export default function EntryList(props) {
               <TR>
                 <TH>Date</TH>
                 <TH>Cost(৳)</TH>
-                <TH>Reserve(৳)</TH>
+                <TH>Deposit(৳)</TH>
                 <TH>Customer</TH>
-                <TH>Actions</TH>
+                <TH>Control</TH>
               </TR>
             </THEAD>
             <TBODY>
@@ -182,7 +182,7 @@ export default function EntryList(props) {
                             style={{ color: "red" }}
                             onClick={() => handleRemove(item)}
                           >
-                            Remove
+                            Delete
                           </Button>
                           <Button onClick={() => setRemoveId(null)}>
                             Cancel
@@ -193,7 +193,7 @@ export default function EntryList(props) {
                           style={{ color: "red" }}
                           onClick={() => setRemoveId(item._id)}
                         >
-                          Remove
+                          Delete
                         </Button>
                       ) : (
                         ""

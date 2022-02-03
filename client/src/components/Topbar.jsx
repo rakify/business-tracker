@@ -103,7 +103,7 @@ const Topbar = () => {
                 fontSize: "20px",
               }}
             >
-              Home
+              Homepage
             </MenuItem>
           ) : (
             <MenuItem>
@@ -115,13 +115,13 @@ const Topbar = () => {
                   cursor: "pointer",
                 }}
               >
-                Home
+                Homepage
               </Link>
             </MenuItem>
           )}
           {pos.pathname === "/pages/customers" ? (
             <MenuItem style={{ marginTop: "5px", fontWeight: "bolder" }}>
-              Customers
+              Customer
             </MenuItem>
           ) : (
             <MenuItem>
@@ -133,13 +133,13 @@ const Topbar = () => {
                   cursor: "pointer",
                 }}
               >
-                Customers
+                Customer
               </Link>
             </MenuItem>
           )}
           {pos.pathname === "/pages/products" ? (
             <MenuItem style={{ marginTop: "5px", fontWeight: "bolder" }}>
-              Products
+              Product
             </MenuItem>
           ) : (
             <MenuItem>
@@ -151,7 +151,7 @@ const Topbar = () => {
                   cursor: "pointer",
                 }}
               >
-                Products
+                Product
               </Link>
             </MenuItem>
           )}

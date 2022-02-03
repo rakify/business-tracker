@@ -87,7 +87,7 @@ const Customers = () => {
               <TH>Mobile</TH>
               <TH>Address</TH>
               <TH>Notes</TH>
-              <TH>Actions</TH>
+              <TH>Control</TH>
             </TR>
           </THEAD>
           <TBODY>
@@ -113,7 +113,7 @@ const Customers = () => {
                             cursor: "pointer",
                           }}
                         >
-                          Details
+                         See Details
                         </Link>
                       </Button>
                       <Button onClick={(e) => handleEdit(e, customer)}>
@@ -121,7 +121,7 @@ const Customers = () => {
                       </Button>
                       {customer.reserve === 0 && (
                         <Button onClick={(e) => handleRemove(e, customer)}>
-                          Remove
+                          Delete
                         </Button>
                       )}
                     </TD>

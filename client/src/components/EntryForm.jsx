@@ -109,7 +109,12 @@ const ForgotClick = styled.button`
 const EntryForm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-  const date = new Date().toLocaleString('en-us', {  weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'  })
+  const date = new Date().toLocaleString("en-us", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
   const [inputs, setInputs] = useState({
     user: user.username,
     date: date,
@@ -205,8 +210,8 @@ const EntryForm = () => {
       address: customer?.address,
       note: customer?.note,
       reserve: inputs?.finalReserve,
-      totalCost: inputs.cost+customer.totalCost,
-      totalReserve: inputs.reserve+customer.totalReserve,
+      totalCost: inputs.cost + customer.totalCost,
+      totalReserve: inputs.reserve + customer.totalReserve,
     };
     customers[pos] = newCustomer;
     const updatedUser = {
@@ -230,7 +235,6 @@ const EntryForm = () => {
       {prompt && <KeyModal id={user._id} />}
       {/* If Error Fetched By Server */}
       {error && <ErrorDisplay error={error} />}
-      
       {/* Admin Form */}
       <Form onSubmit={handleSubmit}>
         {/* Start Form Inputs */}
@@ -266,7 +270,7 @@ const EntryForm = () => {
               <TH>Name</TH>
               <TH>Unit Price(৳)</TH>
               <TH>Quantity</TH>
-              <TH>Subtotal(৳)</TH>
+              <TH>Summation(৳)</TH>
             </TR>
           </THEAD>
           {user.products.map((i) => (
@@ -295,7 +299,7 @@ const EntryForm = () => {
         </TABLE>
         <Bottom>
           <BottomLeft>
-            <InputTitle>Current Cost: {inputs.cost}৳</InputTitle>
+            <InputTitle>Today's Total Cost: {inputs.cost}৳</InputTitle>
             {inputs.by &&
               inputs.previousReserve !== 0 &&
               (inputs.previousReserve > 0 ? (
@@ -310,7 +314,7 @@ const EntryForm = () => {
           </BottomLeft>
           <BottomRight>
             <InputTitle>
-              Current Reserve:
+              Today's Deposit:
               <Input
                 style={{ width: "80px", margin: "3px" }}
                 type="number"
@@ -322,7 +326,7 @@ const EntryForm = () => {
             </InputTitle>
             <InputTitle>
               {inputs.finalReserve >= 0
-                ? `Final Reserve:
+                ? `Final Deposit:
                 ${inputs.finalReserve}৳`
                 : `Final Due:${Math.abs(inputs.finalReserve)}৳`}
             </InputTitle>

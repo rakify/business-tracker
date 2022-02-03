@@ -11,6 +11,13 @@ const Container = styled.div`
 const Sidebar = styled.div`
   flex: 1;
 `;
+const Select = styled.select`
+  margin: 3px 3px 3px 0;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  cursor: pointer;
+`;
 const Form = styled.form`
   flex: 9;
 `;
@@ -31,12 +38,12 @@ const Title = styled.div`
 const Input = styled.input`
   outline: none;
   margin-bottom: 10px;
-  width:100%;
+  width: 100%;
   padding: 5px;
-  border:1px solid black;
+  border: 1px solid black;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 `;
 const Label = styled.label`
   color: #132513;
@@ -144,7 +151,7 @@ export default function Settings() {
               name="username"
               maxLength="100"
               value={inputs?.username}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
               required
             />
             <br />
@@ -155,9 +162,24 @@ export default function Settings() {
               name="email"
               maxLength="100"
               value={inputs?.email}
-              onChange={(e) => handleChange(e)}
+              onChange={handleChange}
               required
             />
+            <br />
+            <Label>Language: </Label>
+            <Select
+              name="language"
+              value={inputs.language}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled>
+                Select
+              </option>
+              <option value="english">English</option>
+              <option value="bangla">Bangla</option>
+            </Select>
+            *Under Construction
             <br />
             <Label>Your Access Key: </Label>
             <Input

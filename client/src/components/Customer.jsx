@@ -76,16 +76,16 @@ const Customer = () => {
             <b>{customer.note || "[Empty]"}</b>
           </P>
           <P>
-            <li>Total Spend: </li>
+            <li>Total Purchase: </li>
             <b>{customer.totalCost}৳</b>
           </P>
           <P>
-            <li>Total Reserve: </li>
+            <li>Total Submit: </li>
             <b>{customer.totalReserve}৳</b>
           </P>
           <P>
             <li>
-              {customer.reserve < 0 ? "Payable Amount:" : "Reserved Credit:"}
+              {customer.reserve < 0 ? "Unpaid Amount:" : "Extra Ammount:"}
             </li>
             <b>{Math.abs(customer.reserve)}৳</b>
           </P>

@@ -30,11 +30,8 @@ const Admin = () => {
 
   useEffect(() => {
     getEntry(user.username, monthId, year, dispatch);
-  }, [user, dispatch, monthId, year]);
-
-  useEffect(() => {
     getUser(user.username, dispatch);
-  }, [user.username, dispatch]);
+  }, [user, dispatch, monthId, year]);
 
   return (
     <Container>

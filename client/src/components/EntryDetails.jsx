@@ -82,13 +82,13 @@ const EntryDetails = () => {
             <TH>Name</TH>
             <TH>Price(৳)</TH>
             <TH>Quantity</TH>
-            <TH>Subtotal(৳)</TH>
+            <TH>Summation(৳)</TH>
           </TR>
         </THEAD>
         <TBODY>
           {entry.products.map((item,i) => (
-            <TR>
-              <TD>{i+1}. {item.name}</TD>
+            <TR key={item._id}>
+              <TD>{i+1}| {item.name}</TD>
               <TD>{item.price}</TD>
               <TD>{entry.quantity[`${item.name}`]}</TD>
               <TD>{entry.subtotal[`${item.name}`]}</TD>
@@ -117,13 +117,13 @@ const EntryDetails = () => {
           <TR>
             <TD2></TD2>
             <TD2></TD2>
-            <TD>Today Deposit:</TD>
+            <TD>Today's Deposit:</TD>
             <TD>{entry.reserve}৳</TD>
           </TR>
           <TR>
             <TD2></TD2>
             <TD2></TD2>
-            <TD> {entry.finalReserve < 0 ? `Due Left:` : `Reserve Left:`}</TD>
+            <TD> {entry.finalReserve < 0 ? `Rest Due Ammount:` : `Reserve Left:`}</TD>
             <TD>
 {Math.abs(entry.finalReserve)}৳
             </TD>

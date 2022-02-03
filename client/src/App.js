@@ -15,6 +15,7 @@ import Products from "./components/Products";
 import Settings from "./components/Settings";
 import EntryDetails from "./components/EntryDetails";
 import Customer from "./components/Customer";
+import Footer from './components/Footer';
 
 function App() {
   const user = useSelector((state) => state.user.currentUser);
@@ -74,6 +75,7 @@ function App() {
         />
         <Route exact path="/" element={user ? <Home /> : <Login />} />
       </Routes>
+      {user?.language==="bangla" && <Footer />}
     </Router>
   );
 }
