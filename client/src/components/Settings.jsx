@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { updateUser } from "../redux/apiCalls";
-import { updateKey } from "../redux/apiCalls";
 import Topbar from "./Topbar";
 import ErrorDisplay from "./ErrorDisplay";
 
@@ -32,10 +31,12 @@ const Title = styled.div`
 const Input = styled.input`
   outline: none;
   margin-bottom: 10px;
-  padding: 2px;
-  margin: 2px;
-  width: 50%;
-  display: flex;
+  width:100%;
+  padding: 5px;
+  border:1px solid black;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; 
 `;
 const Label = styled.label`
   color: #132513;
@@ -67,8 +68,6 @@ export default function Settings() {
     shopBanner: user.shopBanner || "",
   });
   const [error, setError] = useState("");
-  const [confirm, setConfirm] = useState("Set Key");
-  const [keyResult, setKeyResult] = useState();
   const [showSidebar, setShowSidebar] = useState(false);
   const [nowShowing, setNowShowing] = useState("account");
 
@@ -226,9 +225,9 @@ export default function Settings() {
             <br />
             <Label>Office Phone: </Label>
             <Input
-              type="text"
+              type="number"
               name="shopOfficePn"
-              maxLength="12"
+              maxLength="11"
               placeholder="Office Phone"
               value={inputs?.shopOfficePn}
               onChange={(e) => handleChange(e)}
@@ -236,9 +235,9 @@ export default function Settings() {
             <br />
             <Label>Other Phone: </Label>
             <Input
-              type="text"
+              type="number"
               name="shopOtherPn"
-              maxLength="1000"
+              maxLength="11"
               placeholder="Other Phone"
               value={inputs?.shopOtherPn}
               onChange={(e) => handleChange(e)}
@@ -259,7 +258,7 @@ export default function Settings() {
               style={{
                 outline: "none",
                 fontSize: "12px",
-                width: "50px",
+                width: "fit-content",
               }}
               maxLength="4"
               minLength="4"

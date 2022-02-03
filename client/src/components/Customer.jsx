@@ -77,11 +77,11 @@ const Customer = () => {
           </P>
           <P>
             <li>Total Spend: </li>
-            <b>{customer.totalCost}</b>
+            <b>{customer.totalCost}৳</b>
           </P>
           <P>
             <li>Total Reserve: </li>
-            <b>{customer.totalReserve}</b>
+            <b>{customer.totalReserve}৳</b>
           </P>
           <P>
             <li>
@@ -91,25 +91,30 @@ const Customer = () => {
           </P>
         </Left>
         <Right>
-          <Title>All Purchases</Title><br />
-          <TABLE>
-            <THEAD>
-              <TR>
-                <TH>Date</TH>
-                <TH>Cost</TH>
-                <TH>Reserve</TH>
-              </TR>
-            </THEAD>
-            <TBODY>
-              {filteredEntries.map((item, i) => (
-                <TR key={item._id}>
-                  <TD>{i + 1 + ". " + item.date}</TD>
-                  <TD>{item.cost.toFixed(2)}</TD>
-                  <TD>{item.reserve.toFixed(2)}</TD>
+          <Title>All Purchases</Title>
+          <br />
+          {filteredEntries.length === 0 ? (
+            <b>This customer has no past purchases.</b>
+          ) : (
+            <TABLE>
+              <THEAD>
+                <TR>
+                  <TH>Date</TH>
+                  <TH>Cost</TH>
+                  <TH>Reserve</TH>
                 </TR>
-              ))}
-            </TBODY>
-          </TABLE>
+              </THEAD>
+              <TBODY>
+                {filteredEntries.map((item, i) => (
+                  <TR key={item._id}>
+                    <TD>{i + 1 + ". " + item.date}</TD>
+                    <TD>{item.cost.toFixed(2)}</TD>
+                    <TD>{item.reserve.toFixed(2)}</TD>
+                  </TR>
+                ))}
+              </TBODY>
+            </TABLE>
+          )}
         </Right>
       </Menu>
     </>

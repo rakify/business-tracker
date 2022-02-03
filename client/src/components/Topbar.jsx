@@ -76,6 +76,7 @@ const MenuItem = styled.div`
     background: white;
     color: black;
   }
+  ${mobile({ fontSize: "4vw" })}
 `;
 
 const Topbar = () => {

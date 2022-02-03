@@ -25,14 +25,11 @@ const TABLE = styled.table`
 `;
 
 const TBODY = styled.tbody``;
-const TR = styled.tr`
-  display: flex;
-`;
+const TR = styled.tr``;
 const THEAD = styled.thead``;
 const TH = styled.th`
-  flex: 1;
   text-align: left;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   padding: 10px;
   &:last-child {
     background-color: #d7e5f1;
@@ -41,10 +38,9 @@ const TH = styled.th`
   border-right: 1px solid white;
 `;
 const TD = styled.td`
-  flex: 1;
   text-align: left;
   padding: 10px;
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   &:last-child {
     background-color: #d7e5f1;
   }
@@ -136,7 +132,7 @@ const Customers = () => {
           </TBODY>
         </TABLE>
       </Form>
-
+      <br />
       <AddCustomer />
     </>
   );

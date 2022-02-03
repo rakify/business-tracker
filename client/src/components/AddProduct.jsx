@@ -16,7 +16,7 @@ const Form = styled.form`
 `;
 const Input = styled.input`
   margin-right: 5px;
-  max-width: 200px;
+  width: fit-content;
   padding-left: 5px;
   text-transform: capitalize;
 `;
@@ -53,7 +53,9 @@ const AddProduct = () => {
     let products = user.products;
     const product = [
       {
-        name: inputs.name.toLowerCase().replace(/(^\w{1})|(\s{1}\w{1})/g, match => match.toUpperCase()),
+        name: inputs.name
+          .toLowerCase()
+          .replace(/(^\w{1})|(\s{1}\w{1})/g, (match) => match.toUpperCase()),
         price: inputs.price,
         unit: inputs.unit,
       },
@@ -71,14 +73,24 @@ const AddProduct = () => {
       admin_key: inputs.key,
       products: products,
     };
-    !hasDuplicates && inputs.key.length===4 &&
-      updateUser(user._id, updatedUser, dispatch).then((res) => {
-        setError(res.request);
-      });
+    //
     hasDuplicates &&
       setError({
         status: 500,
         responseText: "-A product by this name already exists!-",
+      });
+    //
+    !hasDuplicates &&
+      inputs.key.length !== 4 &&
+      setError({
+        status: 500,
+        responseText: "-Invalid key. You are unauthorized to do that.-",
+      });
+    //
+    !hasDuplicates &&
+      inputs.key.length === 4 &&
+      updateUser(user._id, updatedUser, dispatch).then((res) => {
+        setError(res.request);
       });
   };
 

@@ -6,7 +6,7 @@ import { updateUser } from "../redux/apiCalls";
 const Input = styled.input`
   margin-right: 5px;
   margin-bottom: 5px;
-  max-width: 200px;
+  width: fit-content;
   padding-left: 5px;
   text-transform: capitalize;
 `;
@@ -18,21 +18,22 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 250;
 `;
-const TR = styled.tr`
-  display: flex;
-`;
+const TR = styled.tr``;
 const TD = styled.td`
-  flex: 1;
   text-align: left;
   padding: 10px;
-  border-right: 1px solid white;
+  border-bottom: 1px solid black;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
 `;
 
 const RemoveProduct = ({ c }) => {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [key, setKey] = useState();
+  const [key, setKey] = useState("");
   const [removeId, setRemoveId] = useState(c._id);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,7 +45,8 @@ const RemoveProduct = ({ c }) => {
       admin_key: key,
       products: products,
     };
-    key.length===4 && updateUser(user._id, updatedUser, dispatch);
+    key.length !== 4 && setError(true);
+    key.length === 4 && updateUser(user._id, updatedUser, dispatch);
   };
 
   return (
@@ -54,15 +56,26 @@ const RemoveProduct = ({ c }) => {
         <TD>{c.price}</TD>
         <TD>{c.unit}</TD>
         <TD>
-          <Input
-            style={{ display: "flex" }}
-            maxLength="4"
-            minLength="4"
-            type="number"
-            name="key"
-            placeholder="Admin Key"
-            onChange={(e) => setKey(e.target.value)}
-          />
+          {!error ? (
+            <Input
+              maxLength="4"
+              minLength="4"
+              type="number"
+              name="key"
+              placeholder="Admin Key"
+              onChange={(e) => setKey(e.target.value)}
+            />
+          ) : (
+            <Input
+              style={{ border: "1px solid red" }}
+              maxLength="4"
+              minLength="4"
+              type="number"
+              name="key"
+              placeholder="Admin Key"
+              onChange={(e) => setKey(e.target.value)}
+            />
+          )}
           <Button onClick={handleSubmit}>Remove</Button>
           <Button onClick={(e) => setRemoveId(null)}>Cancel</Button>
         </TD>

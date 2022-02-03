@@ -6,7 +6,7 @@ import { updateUser } from "../redux/apiCalls";
 const Input = styled.input`
   margin-right: 5px;
   margin-bottom: 5px;
-  max-width: 200px;
+  width: fit-content;
   padding-left: 5px;
   text-transform: capitalize;
 `;
@@ -18,20 +18,20 @@ const Button = styled.button`
   cursor: pointer;
   font-weight: 250;
 `;
-const TR = styled.tr`
-  display: flex;
-`;
+const TR = styled.tr``;
 const TD = styled.td`
-  flex: 1;
   text-align: left;
   padding: 10px;
-  border-right: 1px solid white;
+  border-bottom: 1px solid black;
+  &:last-child {
+    background-color: #d7e5f1;
+  }
 `;
 
 const EditCustomer = ({ c }) => {
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(null);
   const [editId, setEditId] = useState(c._id);
 
   const [customer, setCustomer] = useState({
@@ -69,8 +69,8 @@ const EditCustomer = ({ c }) => {
       totalCost: customer.totalCost,
       totalReserve: customer.totalReserve,
     };
-    const pos = customers.findIndex((item) => item.name === c.name);
-    customers[pos] = newCustomer;
+    const customerIndex = customers.findIndex((item) => item.name === c.name);
+    customers[customerIndex] = newCustomer;
     const updatedUser = {
       email: customer.email,
       admin_key: customer.key,
@@ -81,16 +81,23 @@ const EditCustomer = ({ c }) => {
     const hasDuplicates = customers.some(function (currentObject) {
       return seen.size === seen.add(currentObject.name).size;
     });
-
-    !hasDuplicates && customer.key.length===4 && updateUser(user._id, updatedUser, dispatch);
-    hasDuplicates && setError(true);
+    //
+    hasDuplicates && setError("name");
+    //
+    !hasDuplicates && customer.key.length !== 4 && setError("key");
+    //
+    !hasDuplicates &&
+      customer.key.length === 4 &&
+      updateUser(user._id, updatedUser, dispatch).then(
+        (res) => res.request.status === 401 && setError("key")
+      );
   };
 
   return (
     <>
       <TR>
         <TD>
-          {error ? (
+          {error === "name" ? (
             <>
               <Input
                 style={{ border: "1px solid red" }}
@@ -148,15 +155,26 @@ const EditCustomer = ({ c }) => {
           />
         </TD>
         <TD>
-          <Input
-            style={{ display: "flex" }}
-            maxLength="4"
-            minLength="4"
-            type="number"
-            name="key"
-            placeholder="Admin Key"
-            onChange={handleChange}
-          />
+          {error !== "key" ? (
+            <Input
+              maxLength="4"
+              minLength="4"
+              type="number"
+              name="key"
+              placeholder="Admin Key"
+              onChange={handleChange}
+            />
+          ) : (
+              <Input
+                style={{ border: "1px solid red" }}
+                maxLength="4"
+                minLength="4"
+                type="number"
+                name="key"
+                placeholder="Admin Key"
+                onChange={handleChange}
+              />
+          )}
           <Button onClick={handleSubmit}>Update</Button>
           <Button onClick={(e) => setEditId(null)}>Cancel</Button>
         </TD>

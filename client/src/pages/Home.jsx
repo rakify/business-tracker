@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getEntry, getUser } from "../redux/apiCalls";
 import { useEffect } from "react";
+import { useParams } from "react-router";
 import Topbar from "../components/Topbar";
 import EntryList from "../components/EntryList";
 import UpdateUser from "../components/UpdateUser";
-import { useParams } from "react-router";
+
 const Admin = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
@@ -39,9 +40,14 @@ const Admin = () => {
     prevYear = year;
   }
 
+  //fetch api changes
   useEffect(() => {
     getEntry(user.username, monthId, year, dispatch);
   }, [user, dispatch, monthId, year]);
+  
+  useEffect(() => {
+    getUser(user.username, dispatch);
+  }, [user, dispatch]);
 
   return (
     <>

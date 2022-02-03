@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Topbar from "./Topbar";
 import { mobile } from "../responsive";
@@ -21,31 +21,26 @@ const TABLE = styled.table`
   width: 100%;
 `;
 
-const TBODY = styled.tbody`
-`;
-const TR = styled.tr`
-  display: flex;
-`;
+const TBODY = styled.tbody``;
+const TR = styled.tr``;
 const THEAD = styled.thead``;
 const TH = styled.th`
-  flex: 1;
   text-align: left;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
   padding: 10px;
   &:last-child {
     background-color: #d7e5f1;
   }
-    background-color: #8aa18a;
+  background-color: #8aa18a;
   border-right: 1px solid white;
 `;
 const TD = styled.td`
-  flex: 1;
   text-align: left;
   padding: 10px;
   &:last-child {
     background-color: #d7e5f1;
   }
-  border: 1px solid black;
+  border-bottom: 1px solid black;
 `;
 const Button = styled.button`
   background-color: #132513;
