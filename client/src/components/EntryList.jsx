@@ -68,6 +68,13 @@ export default function EntryList(props) {
   const [key, setKey] = useState("");
   const [removeId, setRemoveId] = useState("");
 
+  const date = new Date().toLocaleString("en-us", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const handleRemove = (entry) => {
     key.length === 4 &&
       deleteEntry(removeId, key, dispatch).then((res) => {
@@ -181,13 +188,15 @@ export default function EntryList(props) {
                             Cancel
                           </Button>
                         </>
-                      ) : (
+                      ) : date === item.date ? (
                         <Button
                           style={{ color: "red" }}
                           onClick={() => setRemoveId(item._id)}
                         >
                           Remove
                         </Button>
+                      ) : (
+                        ""
                       )}
                     </TD>
                   </TR>

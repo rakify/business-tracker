@@ -43,11 +43,9 @@ const Admin = () => {
   //fetch api changes
   useEffect(() => {
     getEntry(user.username, monthId, year, dispatch);
-  }, [user, dispatch, monthId, year]);
-  
-  useEffect(() => {
     getUser(user.username, dispatch);
-  }, [user, dispatch]);
+  }, [user.username, dispatch, monthId, year]);
+  
 
   return (
     <>
