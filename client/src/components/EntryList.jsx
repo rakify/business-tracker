@@ -143,6 +143,7 @@ export default function EntryList() {
           <TABLE>
             <THEAD>
               <TR>
+                <TH>No.</TH>
                 <TH>Date</TH>
                 <TH>Cost(৳)</TH>
                 <TH>Deposit(৳)</TH>
@@ -154,7 +155,8 @@ export default function EntryList() {
               {filteredEntries.length > 0 &&
                 filteredEntries.map((item, i) => (
                   <TR key={item._id}>
-                    <TD>{filteredEntries.length - i + ". " + item.date}</TD>
+                    <TD>{item.entryNo}</TD>
+                    <TD>{item.date}</TD>
                     <TD>{item.cost.toFixed(2)}</TD>
                     <TD>{item.reserve.toFixed(2)}</TD>
                     <TD>{item.by}</TD>

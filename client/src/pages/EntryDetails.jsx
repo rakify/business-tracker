@@ -65,7 +65,7 @@ const EntryDetails = () => {
         </p>
       )}
       <FifthLine>
-        <p>Entry No.: {entries.length - entryIndex}</p>
+        <p>Entry No.: {entry.entryNo}</p>
         <p>Date: {entry.date.substring(entry.date.indexOf(",") + 1)}</p>
         <p>Day: {entry.date.substring(0, entry.date.indexOf(","))}</p>
       </FifthLine>
