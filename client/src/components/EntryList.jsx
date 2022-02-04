@@ -134,7 +134,7 @@ export default function EntryList() {
       </TOP>
       {filteredEntries.length === 0 && (
         <>
-          <h3>As empty as a politician's promises. ツ</h3>
+          <h3>As blank as a politician's promises. ツ</h3>
           <h4>Lets start updating data by clicking on your username.</h4>
         </>
       )}

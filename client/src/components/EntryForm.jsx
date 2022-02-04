@@ -246,6 +246,7 @@ const EntryForm = () => {
         {/* Start Form Inputs */}
         <Title>Submit Todays Entry</Title>
         <br />
+        <InputTitle>Entry No.: {inputs.entryNo}</InputTitle>
         <Top>
           <InputTitle>
             Select Customer:
@@ -266,7 +267,6 @@ const EntryForm = () => {
             </Select>
           </InputTitle>
         </Top>
-        <InputTitle>Entry Number: {inputs.entryNo}</InputTitle>
         {/* Add Products */}
         <TABLE style={{ border: "1px solid green" }}>
           <caption>
