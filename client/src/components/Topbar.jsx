@@ -1,9 +1,10 @@
 import { mobile } from "../responsive";
-import { logout } from "../redux/apiCalls";
+import { logout, getEntry, getUser } from "../redux/apiCalls";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import { useEffect } from "react";
 
 const Top = styled.div`
   display: flex;
@@ -63,7 +64,7 @@ const Menu = styled.div`
 const MenuItem = styled.div`
   margin-right: 5px;
   border-radius: 10%;
-  background: #63AA9C;
+  background: #63aa9c;
   color: white;
   position: relative;
   display: flex;
@@ -82,17 +83,21 @@ const MenuItem = styled.div`
 const Topbar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-
   const pos = useLocation();
 
+  //fetch api changes
+  useEffect(() => {
+    getEntry(user.username, dispatch);
+    getUser(user.username, dispatch);
+  }, [user.username, dispatch]);
   return (
     <>
-        <Top>
-          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            {user?.shopName ? user.shopName : "Business Tracker"}
-          </Link>
-        </Top>
-      
+      <Top>
+        <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+          {user?.shopName ? user.shopName : "Business Tracker"}
+        </Link>
+      </Top>
+
       {user?.customers.length > 0 && (
         <Menu>
           {pos.pathname === "/" ? (
@@ -100,7 +105,7 @@ const Topbar = () => {
               style={{
                 marginTop: "5px",
                 fontWeight: "bolder",
-                fontSize: "20px",
+                fontSize: "5vw",
               }}
             >
               Homepage

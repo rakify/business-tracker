@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { updateUser } from "../redux/apiCalls";
-import Topbar from "./Topbar";
-import ErrorDisplay from "./ErrorDisplay";
+import Topbar from "../components/Topbar";
+import ErrorDisplay from "../components/ErrorDisplay";
 
 const Container = styled.div`
   display: flex;

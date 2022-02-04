@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const EntrySchema = new mongoose.Schema(
   {
     user: String,
+    entryNo: Number,
     date: String,
     cost: Number, //todays total cost
     previousReserve: Number, //previous date final due or reserve

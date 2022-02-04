@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Topbar from "./Topbar";
-import AddCustomer from "./AddCustomer";
-import EditCustomer from "./EditCustomer";
-import RemoveCustomer from "./RemoveCustomer";
+import Topbar from "../components/Topbar";
+import AddCustomer from "../components/AddCustomer";
+import EditCustomer from "../components/EditCustomer";
+import RemoveCustomer from "../components/RemoveCustomer";
 
 const Form = styled.form`
   display: flex;

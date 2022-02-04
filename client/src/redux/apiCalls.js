@@ -106,10 +106,10 @@ export const getUser = async (username, dispatch) => {
   }
 };
 
-export const getEntry = async (username, month, year, dispatch) => {
+export const getEntry = async (username, dispatch) => {
   dispatch(getEntriesStart());
   try {
-    const res = await axios.get(`/entries/${username}/${year}/${month}`);
+    const res = await axios.get(`/entries/${username}`);
     dispatch(getEntriesSuccess(res.data));
   } catch (err) {
     dispatch(getEntriesFailure());

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Topbar from "./Topbar";
+import Topbar from "../components/Topbar";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
-import AddProduct from "./AddProduct";
-import EditProduct from "./EditProduct";
-import RemoveProduct from "./RemoveProduct";
+import AddProduct from "../components/AddProduct";
+import EditProduct from "../components/EditProduct";
+import RemoveProduct from "../components/RemoveProduct";
 
 const Form = styled.form`
   display: flex;

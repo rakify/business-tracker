@@ -59,7 +59,7 @@ const Button = styled.button`
   font-weight: 250;
 `;
 
-export default function EntryList(props) {
+export default function EntryList() {
   const user = useSelector((state) => state.user.currentUser);
   const entries = useSelector((state) => state.data.entries);
   const dispatch = useDispatch();
@@ -122,7 +122,7 @@ export default function EntryList(props) {
     <>
       <TOP>
         {error && <ErrorDisplay error={error} />}
-        <TITLE>{props.month} Report</TITLE>
+        <TITLE>All Report</TITLE>
         {filteredEntries.length > 0 && (
           <Input
             type="text"
@@ -205,14 +205,6 @@ export default function EntryList(props) {
           </TABLE>
         )}
       </Container>
-      {!props.admin && (
-        <Link
-          to={{ pathname: `/${props.prevYear}/${props.prevMonthId}` }}
-          style={{ textDecoration: "none" }}
-        >
-          ❮ {props.prevMonth}, {props.prevYear} Report
-        </Link>
-      )}
     </>
   );
 }

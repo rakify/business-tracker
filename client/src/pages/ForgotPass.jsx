@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { forgotPass, resetPass } from "../redux/apiCalls";
 import { useParams } from "react-router";
-import Topbar from "./Topbar";
+import Topbar from "../components/Topbar";
 import { Link } from "react-router-dom";
 
 const Form = styled.form``;

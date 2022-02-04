@@ -36,7 +36,7 @@ const ErrorDisplay = ({ error }) => {
             borderRadius: "3px 3px 3px 3px",
           }}
         >
-          ☹ {error.responseText.slice(1, -1)}
+          ☹ {error?.responseText?.slice(1, -1)}
         </Error>
       )}
     </>

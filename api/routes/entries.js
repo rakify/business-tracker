@@ -5,7 +5,6 @@ const { verifyToken } = require("./verifyToken");
 
 // CREATE A Entry
 router.post("/", verifyToken, async (req, res) => {
-  console.log(req.body)
   const user = await User.findById(req.user.id);
   if (user.admin_key != req.body.admin_key) {
     return res
@@ -62,18 +61,11 @@ router.get("/find/:id", async (req, res) => {
 });
 
 //GET ALL Entries by per user
-router.get("/:username/:year/:month", async (req, res) => {
+router.get("/:username", async (req, res) => {
   try {
-    const month = parseInt(req.params.month);
-    const year = parseInt(req.params.year);
-    const fromDate = new Date(year, month, 1);
-    const daysInMonth = new Date(year, month+1, 0).getDate();
-    const toDate = new Date(year, month, daysInMonth+1);
-  
     let entries = await Entry.find({
       user: req.params.username,
-      $and: [{ createdAt: { $gt: fromDate } }, { createdAt: { $lt: toDate } }],
-    }).sort({createdAt: -1});
+    }).sort({ createdAt: -1 });
     res.status(200).json(entries);
   } catch (err) {
     res.status(500).json(err);

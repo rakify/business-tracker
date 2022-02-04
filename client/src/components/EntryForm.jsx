@@ -109,7 +109,9 @@ const ForgotClick = styled.button`
 const EntryForm = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+  const entries = useSelector((state) => state.data.entries);
   const date = new Date().toLocaleString("en-us", {
+    //this is so we can let only todays entry the access to remove
     weekday: "long",
     year: "numeric",
     month: "long",
@@ -117,6 +119,7 @@ const EntryForm = () => {
   });
   const [inputs, setInputs] = useState({
     user: user.username,
+    entryNo: entries[0]?.entryNo + 1 || 1, //if no entries set 1 or set first entries(sorted so) entryNo+1
     date: date,
     cost: 0, // todays total cost
     previousReserve: 0, // previous date final reserved
@@ -159,7 +162,7 @@ const EntryForm = () => {
       }));
   };
 
-  //control when inputs.by changes and update previousReserve instantly
+  //with change in inputs.by, update previousReserve instantly
   useEffect(() => {
     const pos = user.customers.findIndex((item) => item.name === inputs.by);
     pos !== -1 && setPos(pos);
@@ -168,7 +171,7 @@ const EntryForm = () => {
       setInputs((prev) => ({ ...prev, previousReserve: customer.reserve }));
   }, [inputs.by, user.customers]);
 
-  //check item and subtotal changes and update total cost value
+  //with change in item and subtotal, update total cost value
   useEffect(() => {
     let total = 0;
     for (let item in subtotal) {
@@ -177,7 +180,7 @@ const EntryForm = () => {
     setInputs((prev) => ({ ...prev, cost: total }));
   }, [subtotal]);
 
-  //with cost, previous reserve and todays reserve, update final reserved
+  //with change in cost, previous reserve and todays reserve, update final reserve
   useEffect(() => {
     let totalCost = inputs.previousReserve - inputs.cost;
     let finalReserve = totalCost + inputs.reserve;
@@ -222,7 +225,10 @@ const EntryForm = () => {
     //add new entry
     addEntry({ ...inputs, products, quantity, subtotal }, dispatch).then(
       (res) => {
-        res.status === 200 && updateUser(user._id, updatedUser, dispatch);
+        // if no error update user
+        res.status === 200 &&
+          updateUser(user._id, updatedUser, dispatch) &&
+          setInputs((prev) => ({ ...prev, entryNo: inputs.entryNo + 1 }));
         setError(res.request);
         setLoading(false);
       }
@@ -260,6 +266,7 @@ const EntryForm = () => {
             </Select>
           </InputTitle>
         </Top>
+        <InputTitle>Entry Number: {inputs.entryNo}</InputTitle>
         {/* Add Products */}
         <TABLE style={{ border: "1px solid green" }}>
           <caption>

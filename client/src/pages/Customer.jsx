@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import styled from "styled-components";
-import Topbar from "./Topbar";
+import Topbar from "../components/Topbar";
 
 const Title = styled.div`
   padding: 10px;
