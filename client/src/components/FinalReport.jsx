@@ -1,16 +1,7 @@
 import styled from "styled-components";
-import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
-import { updateUser } from "../redux/apiCalls";
+import { useSelector } from "react-redux";
 
-const Container = styled.div`
-  flex: 1;
-`;
-const MAINTABLE = styled.table`
-  margin-bottom: 1px;
-  width: 100%;
-  background-color: #a79ea2e6;
-`;
+const Container = styled.div``;
 const TABLE = styled.table`
   margin-bottom: 2px;
   width: 100%;
@@ -20,11 +11,7 @@ const TABLE = styled.table`
   }
   background-color: #fbfcfd;
 `;
-const CAPTION = styled.caption`
-  font-weight: bolder;
-  display: inline;
-`;
-
+const THEAD = styled.thead``;
 const TBODY = styled.tbody``;
 const TR = styled.tr`
   display: flex;
@@ -43,146 +30,77 @@ const TD = styled.td`
   justify-content: center;
   align-items: center;
 `;
-const Input = styled.input`
-  outline: none;
-  font-size: 12px;
-  width: 50px;
-`;
-const Button = styled.button`
-  background-color: #7a0710;
-  width: 35px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  border-radius: 40%;
-`;
-const Info = styled.div`
-  color: #059;
-  background-color: #bef;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 3px 3px 3px 3px;
-`;
-
-const FinalReport = ({ admin }) => {
-  const dispatch = useDispatch();
+const FinalReport = () => {
   const entries = useSelector((state) => state.data.entries);
   const user = useSelector((state) => state.user.currentUser);
-  const [key, setKey] = useState("");
-  const [info, setInfo] = useState("");
 
-  let TotalMoney = 0,
-    allSpent = 0,
-    allReserved = 0;
+  const date = new Date().toLocaleString("en-us", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  
 
-  // set initialMoney per customer to 0
-  let initialMoney = {};
+  let totalSells = 0,
+    totalDeposit = 0,
+    todayTotalSells = 0,
+    todayTotalDeposit = 0;
+
+  // up until now total sells and deposit calculate
   for (let i = 0; i < user.customers.length; i++) {
-    initialMoney[user.customers[i]] = 0;
+    totalSells += user.customers[i].totalCost;
+    totalDeposit += user.customers[i].totalReserve;
   }
 
-  // set initialReserved per customer to 0
-  let initialReserved = {};
-  for (let i = 0; i < user.customers.length; i++) {
-    initialReserved[user.customers[i]] = 0;
+  // todays calculation
+  const todayEntries = entries.filter((item) => item.date === date);
+  for (let i = 0; i < todayEntries.length; i++) {
+    todayTotalSells += todayEntries[i].cost;
+    todayTotalDeposit += todayEntries[i].reserve;
   }
 
-  for (const i in entries) {
-    const by = entries[i].by;
-    initialReserved[by] += entries[i].reserved;
-    TotalMoney += entries[i].total;
-    allSpent += entries[i].spent;
-    allReserved += entries[i].reserved;
-    // for (let j = 0; j < user.customers.length; j++) {
-    //   initialMoney[user.customers[j]] += entries[i].meals[user.customers[j]];
-    //   if (isNaN(initialMeals[user.customers[j]]))
-    //     initialMeals[user.customers[j]] = 0;
-    // }
-  }
-//   let mealRate = allSpent / TotalMoney;
-
-//   const deleteMember = (id) => {
-//     let members = [...user.members];
-//     members.splice(id, 1);
-//     updateUser(user._id, { members: members, admin_key: key }, dispatch);
-//   };
 
   return (
     <Container>
-      {info && <Info>{info}</Info>}
-      <MAINTABLE>
-        <CAPTION>Final Calculation</CAPTION>
+      <TABLE>
+        <THEAD>
+          <TR>
+            <TH>Todays Total Sells</TH>
+            <TH>Total Deposit</TH>
+            <TH>{totalSells - totalDeposit >= 0 ? "Due" : "Extra Ammount"}</TH>
+          </TR>
+        </THEAD>
         <TBODY>
           <TR>
-            <TH>Total Meals</TH>
-            <TH>Total Spent</TH>
-            <TH>Total Reserve</TH>
-            <TH>Remaining</TH>
-            {/* <TH>Meal Rate</TH> */}
+            <TD>{todayTotalSells.toFixed(2)}</TD>
+            <TD>{todayTotalDeposit.toFixed(2)}</TD>
+            <TD>{Math.abs(todayTotalSells - todayTotalDeposit)}</TD>
           </TR>
         </TBODY>
-        <TBODY>
-          <TR>
-            <TD>{TotalMoney}</TD>
-            <TD>{allSpent.toFixed(2)}</TD>
-            <TD>{allReserved.toFixed(2)}</TD>
-            <TD>{(allReserved - allSpent).toFixed(2)}</TD>
-            {/* <TD>{isNaN(mealRate)?"0.00":mealRate.toFixed(2)}</TD> */}
-          </TR>
-        </TBODY>
-      </MAINTABLE>
+      </TABLE>
       <br />
-      {/* {user.members.map((i, j) => (
-        <TABLE key={j}>
-          <CAPTION>{i}</CAPTION>
-          <TBODY>
-            <TR>
-              <TH>Meals</TH>
-              <TH>Reserved</TH>
-              <TH>Due(-) | Extra(+)</TH>
-              {admin && <TH>Actions</TH>}
-            </TR>
-          </TBODY>
-          <TBODY>
-            <TR>
-              <TD>{initialMeals[i]}</TD>
-              <TD>{initialReserved[i].toFixed(2)}</TD>
-              <TD>
-                {isNaN(initialReserved[i] - initialMeals[i] * mealRate)?"0.00":(initialReserved[i] - initialMeals[i] * mealRate).toFixed(2)}
-              </TD>
-              {admin && initialMeals[i] === 0 && initialReserved[i] === 0 ? (
-                <TD>
-                  <Input
-                    type="number"
-                    name="key"
-                    minLength="4"
-                    maxLength="4"
-                    value={key}
-                    placeholder="Key"
-                    required
-                    onChange={(e) => setKey(e.target.value)}
-                  />
-                  <Button onClick={(e) => deleteMember(j)}>✘</Button>
-                </TD>
-              ) : (
-                admin && (
-                  <TD>
-                    <Button
-                      onClick={() =>
-                        setInfo(
-                          `You Can't Do Anything With This Member Right Now Since S/He Has Contributed To This Month.`
-                        )
-                      }
-                    >
-                      VIP
-                    </Button>
-                  </TD>
-                )
-              )}
-            </TR>
-          </TBODY>
-        </TABLE>
-      ))} */}
+      <TABLE>
+        <THEAD>
+          <TR>
+            <TH>So Far Total Sells</TH>
+            <TH>Total Deposit</TH>
+            <TH>
+              {totalSells - totalDeposit >= 0
+                ? "Total Due Ammount"
+                : "Extra Ammount"}
+            </TH>
+          </TR>
+        </THEAD>
+        <TBODY>
+          <TR>
+            <TD>{totalSells.toFixed(2)}</TD>
+            <TD>{totalDeposit.toFixed(2)}</TD>
+            <TD>{Math.abs(totalSells - totalDeposit)}</TD>
+          </TR>
+        </TBODY>
+      </TABLE>
+      <br />
     </Container>
   );
 };

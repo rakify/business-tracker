@@ -117,6 +117,8 @@ const EntryForm = () => {
     month: "long",
     day: "numeric",
   });
+  const [finalReserve, setFinalReserve] = useState(0);
+
   const [inputs, setInputs] = useState({
     user: user.username,
     entryNo: entries[0]?.entryNo + 1 || 1, //if no entries set 1 or set first entries(sorted so) entryNo+1
@@ -124,7 +126,7 @@ const EntryForm = () => {
     cost: 0, // todays total cost
     previousReserve: 0, // previous date final reserved
     reserve: 0, // todays reserve
-    finalReserve: 0, // (previousReserve-cost)+reserve
+    finalReserve: finalReserve, // (previousReserve-cost)+reserve
     by: "", //buyer
     admin_key: "",
   });
@@ -161,32 +163,6 @@ const EntryForm = () => {
         [e.target.name]: e.target.valueAsNumber,
       }));
   };
-
-  //with change in inputs.by, update previousReserve instantly
-  useEffect(() => {
-    const pos = user.customers.findIndex((item) => item.name === inputs.by);
-    pos !== -1 && setPos(pos);
-    const customer = user.customers[pos];
-    customer &&
-      setInputs((prev) => ({ ...prev, previousReserve: customer.reserve }));
-  }, [inputs.by, user.customers]);
-
-  //with change in item and subtotal, update total cost value
-  useEffect(() => {
-    let total = 0;
-    for (let item in subtotal) {
-      total += subtotal[item];
-    }
-    setInputs((prev) => ({ ...prev, cost: total }));
-  }, [subtotal]);
-
-  //with change in cost, previous reserve and todays reserve, update final reserve
-  useEffect(() => {
-    let totalCost = inputs.previousReserve - inputs.cost;
-    let finalReserve = totalCost + inputs.reserve;
-    setInputs((prev) => ({ ...prev, finalReserve: finalReserve }));
-  }, [inputs.cost, inputs.previousReserve, inputs.reserve]);
-
   // Handle change in quantity and also update subtotal
   const handleQuantity = (e, price) => {
     let value = 0;
@@ -199,6 +175,32 @@ const EntryForm = () => {
     });
   };
 
+  //with change in inputs.by, update previousReserve instantly
+  useEffect(() => {
+    const pos = user.customers.findIndex((item) => item.name === inputs.by);
+    pos !== -1 && setPos(pos);
+    const customer = user.customers[pos];
+    customer &&
+      setInputs((prev) => ({ ...prev, previousReserve: customer.reserve }));
+  }, [inputs.by, user.customers]);
+
+  //with change in subtotal, update total cost value
+  useEffect(() => {
+    let total = 0;
+    for (let item in subtotal) {
+      total += subtotal[item];
+    }
+    setInputs((prev) => ({ ...prev, cost: total }));
+  }, [subtotal]);
+
+  //with change in cost, previous reserve and todays reserve, update final reserve
+  useEffect(() => {
+    let totalCost = inputs.previousReserve - inputs.cost;
+    let finalReserve = totalCost + inputs.reserve;
+    setFinalReserve(finalReserve);
+  }, [inputs.cost, inputs.previousReserve, inputs.reserve]);
+
+  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
     const products = user.products;
@@ -332,10 +334,10 @@ const EntryForm = () => {
               />
             </InputTitle>
             <InputTitle>
-              {inputs.finalReserve >= 0
+              {finalReserve >= 0
                 ? `Final Deposit:
-                ${inputs.finalReserve}৳`
-                : `Final Due:${Math.abs(inputs.finalReserve)}৳`}
+                ${finalReserve}৳`
+                : `Final Due:${Math.abs(finalReserve)}৳`}
             </InputTitle>
           </BottomRight>
         </Bottom>

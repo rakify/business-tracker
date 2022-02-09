@@ -105,7 +105,6 @@ const Topbar = () => {
               style={{
                 marginTop: "5px",
                 fontWeight: "bolder",
-                fontSize: "5vw",
               }}
             >
               Homepage

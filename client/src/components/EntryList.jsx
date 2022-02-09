@@ -145,7 +145,7 @@ export default function EntryList() {
               <TR>
                 <TH>No.</TH>
                 <TH>Date</TH>
-                <TH>Cost(৳)</TH>
+                <TH>Purchase(৳)</TH>
                 <TH>Deposit(৳)</TH>
                 <TH>Customer</TH>
                 <TH>Control</TH>
