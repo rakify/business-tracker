@@ -305,7 +305,10 @@ const EntryForm = () => {
         </TABLE>
         <Bottom>
           <BottomLeft>
-            <InputTitle>Today's Total Cost: {inputs.cost}৳</InputTitle>
+            <InputTitle>
+              Today's Total Cost: <span class="notranslate">{inputs.cost}</span>
+              ৳
+            </InputTitle>
             {inputs.by &&
               inputs.previousReserve !== 0 &&
               (inputs.previousReserve > 0 ? (
