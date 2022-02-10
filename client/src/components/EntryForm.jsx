@@ -117,8 +117,6 @@ const EntryForm = () => {
     month: "long",
     day: "numeric",
   });
-  const [finalReserve, setFinalReserve] = useState(0);
-
   const [inputs, setInputs] = useState({
     user: user.username,
     entryNo: entries[0]?.entryNo + 1 || 1, //if no entries set 1 or set first entries(sorted so) entryNo+1
@@ -126,7 +124,7 @@ const EntryForm = () => {
     cost: 0, // todays total cost
     previousReserve: 0, // previous date final reserved
     reserve: 0, // todays reserve
-    finalReserve: finalReserve, // (previousReserve-cost)+reserve
+    finalReserve: 0, // (previousReserve-cost)+reserve
     by: "", //buyer
     admin_key: "",
   });
@@ -197,10 +195,9 @@ const EntryForm = () => {
   useEffect(() => {
     let totalCost = inputs.previousReserve - inputs.cost;
     let finalReserve = totalCost + inputs.reserve;
-    setFinalReserve(finalReserve);
+    setInputs((prev) => ({ ...prev, finalReserve: finalReserve }));
   }, [inputs.cost, inputs.previousReserve, inputs.reserve]);
 
-  console.log(inputs);
   const handleSubmit = (e) => {
     e.preventDefault();
     const products = user.products;
@@ -334,10 +331,10 @@ const EntryForm = () => {
               />
             </InputTitle>
             <InputTitle>
-              {finalReserve >= 0
+              {inputs.finalReserve >= 0
                 ? `Final Deposit:
-                ${finalReserve}৳`
-                : `Final Due:${Math.abs(finalReserve)}৳`}
+                ${inputs.finalReserve}৳`
+                : `Final Due:${Math.abs(inputs.finalReserve)}৳`}
             </InputTitle>
           </BottomRight>
         </Bottom>

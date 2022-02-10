@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 const Error = styled.div`
-  border: 1px solid;
-  margin: 10px 0px;
+  width: fit-content;
+  left: 33%;
+  right: 33%;
+  position: relative;
+  border-left: 5px solid;
   padding: 15px 10px 15px 50px;
-  background-repeat: no-repeat;
-  background-position: 10px center;
-  cursor: pointer;
 `;
 
 const ErrorDisplay = ({ error }) => {
@@ -23,7 +23,7 @@ const ErrorDisplay = ({ error }) => {
             borderRadius: "3px 3px 3px 3px",
           }}
         >
-          🌟 Update Successfull.
+          Updated Successfully.
         </Error>
       )}
       {error && error.status !== 200 && (
@@ -36,7 +36,7 @@ const ErrorDisplay = ({ error }) => {
             borderRadius: "3px 3px 3px 3px",
           }}
         >
-          ☹ {error?.responseText?.slice(1, -1)}
+          {error?.responseText?.slice(1, -1)}
         </Error>
       )}
     </>
